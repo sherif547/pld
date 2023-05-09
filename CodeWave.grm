@@ -1,0 +1,65 @@
+"Name"          = 'CodeWave'
+"Author"        = 'Mennatull Elsahy'
+"Start Symbol"  = <program>
+
+! Terminals
+identifier  = {letter} {alphanumeric}*
+int         = {digit}+
+float       = {digit}+ '.' {digit}+
+
+! Non-terminals
+<program>       ::= 'Code' '{' <constant> '}' 'Wave'
+<constant>      ::= <assignment> <statement_list>
+                 | <declaration> <statement_list>
+                 | 'for' '(' <for_assignment> ';' <expression> ';' <for_inc_dec> ')' '{' <statement_list> '}' 'endfor'
+                 | 'while' '(' <expression> ')' '{' <statement_list> '}' 'endwhile'
+                 | 'switch' '(' identifier ')' '{' 'case' int ':' <statement_list> '}' 'endswitch'
+                 | 'if' '(' <expression> ')' '{' <statement_list> '}' 'endif'
+                 | 'if' '(' <expression> ')' '{' <statement_list> '}' 'endif' 'elsif' '(' <expression> ')' '{' <statement_list> '}' 'endelsif'
+<assignment> ::= identifier '=' identifier <assignment_op> int 'end'
+<assignment_op> ::= '+=' | '-=' | '*=' | '/='
+
+                 
+<declaration>   ::= identifier '=' int 'end'
+                 | identifier '=' float 'end'
+<for_assignment>::= identifier '=' int
+                 | identifier
+<for_inc_dec>   ::= identifier '++'
+                 | identifier '--'
+                 | '++' identifier
+                 | '--' identifier
+                 | identifier '+=' int
+                 | identifier '-=' int
+                 | identifier '*=' int
+                 | identifier '/=' int
+                 | identifier '=' identifier '+' int
+                 | identifier '=' identifier '-' int
+                 | identifier '=' identifier '*' int
+                 | identifier '=' identifier '/' int
+<expression>    ::= identifier '<=' int
+                 | identifier '>=' int
+                 | identifier '>' int
+                 | identifier '<' int
+                 | identifier '!=' int
+                 | 'true'
+                 | '!false'
+<statement_list>::= <constant> <statement_list>
+                 | <add> <statement_list>
+                 | <sub> <statement_list>
+                 | <div> <statement_list>
+                 | <mul> <statement_list>
+                 
+                 |
+
+<add>           ::= identifier '=' identifier '+' int 'end'
+                 | identifier '+=' int 'end'
+                 | identifier '=' identifier '+' identifier 'end'
+<sub>           ::= identifier '=' identifier '-' int 'end'
+                 | identifier '-=' int 'end'
+                 | identifier '=' identifier '-' identifier 'end'
+<div>           ::= identifier '=' identifier '/' int 'end'
+                 | identifier '/=' int 'end'
+                 | identifier '=' identifier '/' identifier 'end'
+<mul>           ::= identifier '=' identifier '*' int 'end'
+                 | identifier '*=' int 'end'
+                 | identifier '=' identifier '*' identifier 'end'
